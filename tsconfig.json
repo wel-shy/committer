@@ -5,7 +5,9 @@
     "module": "commonjs",
     "outDir": "dist",
     "lib": ["es2018", "dom"],
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true
   },
   "include": ["src/**/*", "test/**/*"],
   "exclude": ["node_modules", "**/*.spec.ts"]
