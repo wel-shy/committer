@@ -4,8 +4,11 @@
   "description": "Commit manager",
   "main": "dist/index.js",
   "scripts": {
-    "test": "nyc --reporter=text mocha 'dist/test/**/*.js'"
+    "test": "nyc --reporter=text mocha 'dist/test/**/*.js'",
+    "build": "tsc",
+    "preversion": "npm run test && conventional-changelog -p angular -i CHANGELOG.md -s"
   },
+  "bin": "./dist/src/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wel-shy/committer.git"
