@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import * as inquirer from 'inquirer';
 import * as emojis from './emojis.json';
 import {exec} from 'child_process';
