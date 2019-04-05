@@ -4,7 +4,7 @@
   "description": "Commit manager",
   "main": "dist/index.js",
   "scripts": {
-    "test": "nyc --reporter=text mocha"
+    "test": "nyc --reporter=text mocha 'dist/test/**/*.js'"
   },
   "repository": {
     "type": "git",
@@ -35,7 +35,14 @@
   "devDependencies": {
     "@commitlint/cli": "^7.5.2",
     "@commitlint/config-conventional": "^7.5.0",
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.6",
+    "chai": "^4.2.0",
     "husky": "^1.3.1",
-    "lint-staged": "^8.1.5"
+    "lint-staged": "^8.1.5",
+    "mocha": "^6.0.2",
+    "nyc": "^13.3.0",
+    "prettier": "^1.16.4",
+    "typescript": "^3.4.1"
   }
 }
