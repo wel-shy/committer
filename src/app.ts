@@ -27,14 +27,17 @@ export default class App {
     emoji: string,
   }> {
     const commitTypes = [
-      'fix',
-      'feat',
+      'build',
+      'ci',
       'chore',
       'docs',
-      'style',
-      'refactor',
+      'feat',
+      'fix',
       'perf',
-      'test',
+      'refactor',
+      'revert',
+      'style',
+      'test'
     ];
 
     const questions = [
