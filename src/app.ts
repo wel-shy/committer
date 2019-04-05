@@ -10,6 +10,10 @@ import {exec} from 'child_process';
  * Uses gitmojis from: https://github.com/carloscuesta/gitmoji
  */
 export default class App {
+
+  constructor() {
+  }
+
   /**
    * Get responses from command line
    * @returns {Promise<{type: string; scope: string; description: string; body: string; footer: string; issue: string}>}
@@ -64,7 +68,7 @@ export default class App {
    * Validate responses.
    * @param {{type: string; scope: string; description: string; body: string; footer: string; issue: string; emoji: string}} answers
    */
-  validate(answers: {
+  public validate(answers: {
     type: string,
     scope: string,
     description: string,
@@ -88,7 +92,7 @@ export default class App {
    * @param {{type: string; scope: string; description: string; body: string; footer: string; issue: string; emoji: string}} answers
    * @returns {string}
    */
-  getCommitMessage(answers: {
+  public getCommitMessage(answers: {
     type: string,
     scope: string,
     description: string,
@@ -111,7 +115,7 @@ export default class App {
     return msg.trim();
   }
 
-  commitChanges(message: string): void {
+  public commitChanges(message: string): void {
     exec(`git commit -S -m '${message}'`, function (error: Error, stdout: string, stderr: string) {
       console.log(stdout);
       console.error(stderr);
@@ -121,21 +125,3 @@ export default class App {
     });
   }
 }
-
-/**
- * Execute app
- *
- * @returns {Promise<void>}
- */
-async function exe (): Promise<void> {
-  const app: App = new App();
-  const ans = await app.getAnswers();
-
-  app.validate(ans);
-
-  const msg = app.getCommitMessage(ans);
-
-  app.commitChanges(msg);
-}
-
-exe().then();
