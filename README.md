@@ -1,0 +1,2 @@
+# Committer
+Git commit manager
