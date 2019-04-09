@@ -1,6 +1,7 @@
 import * as inquirer from 'inquirer';
 import * as emojis from './emojis.json';
 import {exec} from 'child_process';
+import chalk from "chalk";
 
 /**
  * Format a commit
@@ -39,11 +40,29 @@ export default class App {
     ];
 
     const questions = [
-      { type: 'list', name: 'type', message: 'Choose commit type:', choices: commitTypes },
-      { type: 'list',
+      { type: 'autocomplete',
         name: 'emoji',
         message: 'Commit summary:',
-        choices: emojis.gitmojis.map(gitmoji => `${gitmoji.emoji.trim()} - ${gitmoji.description.trim()}`),
+        /**
+         * Get source for emoji list.
+         * @param answersSoFar
+         * @param input
+         */
+        source: (answersSoFar: any, input: string) => {
+          return new Promise(resolve => {
+            // map to string
+            const mapped: string[] = emojis.gitmojis.map(gitmoji => `${gitmoji.emoji.trim()} - ${gitmoji.description.trim()}`);
+
+            // format input
+            if (input === undefined) {
+              input = '';
+            }
+            input = input.toLowerCase().trim();
+
+            // return matches
+            resolve(mapped.filter(gitmoji => gitmoji.toLowerCase().indexOf(input) > -1))
+          })
+        },
         filter: (input: string) => {
           return new Promise(resolve => {
             const ans:
@@ -56,12 +75,15 @@ export default class App {
           })
         }
       },
-      { type: 'input', name: 'scope', message: 'Enter commit scope:'},
-      { type: 'input', name: 'description', message: 'Enter commit message:'},
-      { type: 'input', name: 'body', message: 'Enter commit body:'},
-      { type: 'input', name: 'issue', message: 'References issue/PR:'}
+      { type: 'list', name: 'type', message: 'Choose commit type:', choices: commitTypes },
+      { type: 'input', name: 'scope', message: 'Enter commit scope (optional):'},
+      { type: 'input', name: 'description', message: 'Enter commit title:'},
+      { type: 'input', name: 'body', message: 'Enter commit body (optional):'},
+      { type: 'input', name: 'issue', message: 'References issue/PR (optional):'}
     ];
 
+    // TODO: find a better way to do this with typescript.
+    inquirer.registerPrompt('autocomplete', require('inquirer-autocomplete-prompt'));
     return await inquirer.prompt(questions);
   }
 
@@ -102,27 +124,66 @@ export default class App {
     emoji: string,
   }) {
     let msg: string;
+
+    // add a scope if given
     const scope: string = answers.scope === '' ? answers.scope : `(${answers.scope})`;
+
+    // add description and emoji
     msg = `${answers.type}${scope}: ${answers.description} ${answers.emoji}`;
 
+    // append body if it exists.
     if (answers.body !== '') {
       msg = `${msg}\n\n${answers.body}`;
     }
 
+    // add issue if given
     if (answers.issue !== '') {
       msg = `${msg} #${answers.issue}`;
     }
 
+    // trim whitespace.
     return msg.trim();
   }
 
-  public commitChanges(message: string): void {
-    exec(`git commit -S -m '${message}'`, function (error: Error, stdout: string, stderr: string) {
-      console.log(stdout);
-      console.error(stderr);
-      if (error !== null) {
-        console.log('exec error: ' + error);
+  /**
+   * Commit to git.
+   * todo: format errors with chalk.
+   *
+   * @param message
+   * @param options
+   */
+  public async commitChanges(message: string, options?: { add: boolean, sign: boolean }): Promise<void> {
+    let cmd: string = 'git commit';
+
+    // apply options
+    if (options) {
+      // add all untracked in directory.
+      if (options.add) {
+        await this.executeCommand('git add .');
+        console.log(chalk.green('Staged untracked files'))
       }
+
+      if (options.sign) {
+        cmd = `${cmd} -S`;
+      }
+    }
+
+    cmd = `${cmd} -m '${message}'`;
+
+    await this.executeCommand(cmd);
+    console.log(chalk.green('Changes committed'));
+  }
+
+  /**
+   * Execute a command
+   * @param cmd
+   */
+  private executeCommand(cmd: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      exec(cmd, (error: Error, stdout: string, stderr: string) => {
+        if(error) reject(error);
+        resolve(stdout.trim());
+      })
     });
   }
 }
