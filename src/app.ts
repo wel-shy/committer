@@ -149,15 +149,44 @@ export default class App {
    * todo: format errors with chalk.
    *
    * @param message
+   * @param options
    */
-  public commitChanges(message: string): void {
-    // sign and commit to git
-    exec(`git commit -S -m '${message}'`, function (error: Error, stdout: string, stderr: string) {
+  public async commitChanges(message: string, options?: { add: boolean, sign: boolean }): Promise<void> {
+    let cmd: string = 'git commit';
+
+    if (options) {
+      if (options.add) {
+        try {
+          await this.executeCommand('git add .');
+          console.log('executed adding files');
+        } catch (e) {
+          console.error(e);
+          throw e;
+        }
+      }
+
+      if (options.sign) {
+        cmd = `${cmd} -S`;
+      }
+    }
+
+    cmd = `${cmd} -m '${message}'`;
+
+    exec(cmd, function (error: Error, stdout: string, stderr: string) {
       console.log(stdout);
       console.error(stderr);
       if (error !== null) {
         console.log('exec error: ' + error);
       }
+    });
+  }
+
+  private executeCommand(cmd: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      exec(cmd, (error: Error, stdout: string, stderr: string) => {
+        if(error) reject(error);
+        resolve(stdout.trim());
+      })
     });
   }
 }

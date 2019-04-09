@@ -2,7 +2,7 @@
   "name": "conventional-committer",
   "version": "0.1.1",
   "description": "Commit manager",
-  "main": "dist/index.js",
+  "main": "dist/src/index.js",
   "scripts": {
     "test": "nyc --reporter=text mocha 'dist/test/**/*.js'",
     "build": "tsc",
@@ -50,6 +50,7 @@
     "typescript": "^3.4.1"
   },
   "dependencies": {
+    "commander": "^2.20.0",
     "inquirer": "^6.2.2",
     "inquirer-autocomplete-prompt": "^1.0.1"
   }
