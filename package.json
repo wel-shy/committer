@@ -50,6 +50,7 @@
     "typescript": "^3.4.1"
   },
   "dependencies": {
-    "inquirer": "^6.2.2"
+    "inquirer": "^6.2.2",
+    "inquirer-autocomplete-prompt": "^1.0.1"
   }
 }
