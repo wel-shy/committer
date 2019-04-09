@@ -154,15 +154,11 @@ export default class App {
   public async commitChanges(message: string, options?: { add: boolean, sign: boolean }): Promise<void> {
     let cmd: string = 'git commit';
 
+    // apply options
     if (options) {
+      // add all untracked in directory.
       if (options.add) {
-        try {
-          await this.executeCommand('git add .');
-          console.log('executed adding files');
-        } catch (e) {
-          console.error(e);
-          throw e;
-        }
+        await this.executeCommand('git add .');
       }
 
       if (options.sign) {
@@ -172,15 +168,13 @@ export default class App {
 
     cmd = `${cmd} -m '${message}'`;
 
-    exec(cmd, function (error: Error, stdout: string, stderr: string) {
-      console.log(stdout);
-      console.error(stderr);
-      if (error !== null) {
-        console.log('exec error: ' + error);
-      }
-    });
+    await this.executeCommand(cmd);
   }
 
+  /**
+   * Execute a command
+   * @param cmd
+   */
   private executeCommand(cmd: string): Promise<string> {
     return new Promise((resolve, reject) => {
       exec(cmd, (error: Error, stdout: string, stderr: string) => {

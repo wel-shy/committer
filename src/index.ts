@@ -28,7 +28,13 @@ async function exe (): Promise<void> {
   const ans = await app.getAnswers();
   app.validate(ans);
   const msg = app.getCommitMessage(ans);
-  await app.commitChanges(msg, options);
+
+  try {
+    await app.commitChanges(msg, options);
+  } catch (e) {
+    console.error(e);
+    process.exit(1);
+  }
 }
 
 exe().then();
