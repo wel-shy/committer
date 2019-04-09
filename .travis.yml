@@ -3,7 +3,6 @@ node_js:
   - "10"
 before_script:
   - npm install -g codecov
-  - mkdir coverage
   - tsc
 after_success:
   - codecov
