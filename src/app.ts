@@ -39,7 +39,6 @@ export default class App {
     ];
 
     const questions = [
-      { type: 'list', name: 'type', message: 'Choose commit type:', choices: commitTypes },
       { type: 'autocomplete',
         name: 'emoji',
         message: 'Commit summary:',
@@ -75,10 +74,11 @@ export default class App {
           })
         }
       },
-      { type: 'input', name: 'scope', message: 'Enter commit scope:'},
-      { type: 'input', name: 'description', message: 'Enter commit message:'},
-      { type: 'input', name: 'body', message: 'Enter commit body:'},
-      { type: 'input', name: 'issue', message: 'References issue/PR:'}
+      { type: 'list', name: 'type', message: 'Choose commit type:', choices: commitTypes },
+      { type: 'input', name: 'scope', message: 'Enter commit scope (optional):'},
+      { type: 'input', name: 'description', message: 'Enter commit title:'},
+      { type: 'input', name: 'body', message: 'Enter commit body (optional):'},
+      { type: 'input', name: 'issue', message: 'References issue/PR (optional):'}
     ];
 
     // TODO: find a better way to do this with typescript.
