@@ -4,7 +4,8 @@
   "description": "Commit manager",
   "main": "dist/src/index.js",
   "scripts": {
-    "test": "nyc report --reporter=text-lcov mocha 'dist/test/**/*.js' > coverage.lcov",
+    "test": "nyc mocha 'dist/test/**/*.js'",
+    "posttest": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "build": "tsc",
     "preversion": "npm run test && conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
   },
@@ -42,6 +43,7 @@
     "@types/inquirer": "^6.0.0",
     "@types/mocha": "^5.2.6",
     "chai": "^4.2.0",
+    "codecov": "^3.3.0",
     "husky": "^1.3.1",
     "lint-staged": "^8.1.5",
     "mocha": "^6.0.2",
