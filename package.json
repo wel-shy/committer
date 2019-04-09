@@ -4,8 +4,8 @@
   "description": "Commit manager",
   "main": "dist/src/index.js",
   "scripts": {
-    "test": "nyc mocha 'dist/test/**/*.js'",
-    "posttest": "nyc report --reporter=json > coverage.json && codecov",
+    "test": "nyc mocha 'dist/test/**/*.js' --exit",
+    "posttest": "nyc report --reporter=json json",
     "build": "tsc",
     "preversion": "npm run test && conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
   },
