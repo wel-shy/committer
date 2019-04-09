@@ -5,7 +5,7 @@
   "main": "dist/src/index.js",
   "scripts": {
     "test": "nyc mocha 'dist/test/**/*.js'",
-    "posttest": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "posttest": "nyc report --reporter=json > coverage.json && codecov",
     "build": "tsc",
     "preversion": "npm run test && conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
   },
