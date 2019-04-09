@@ -3,6 +3,7 @@
 import App from "./app";
 // @ts-ignore
 import {version} from '../../package.json';
+import chalk from "chalk";
 
 /**
  * Execute app
@@ -32,7 +33,7 @@ async function exe (): Promise<void> {
   try {
     await app.commitChanges(msg, options);
   } catch (e) {
-    console.error(e);
+    console.error(chalk.red(e.message));
     process.exit(1);
   }
 }

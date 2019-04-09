@@ -1,6 +1,7 @@
 import * as inquirer from 'inquirer';
 import * as emojis from './emojis.json';
 import {exec} from 'child_process';
+import chalk from "chalk";
 
 /**
  * Format a commit
@@ -159,6 +160,7 @@ export default class App {
       // add all untracked in directory.
       if (options.add) {
         await this.executeCommand('git add .');
+        console.log(chalk.green('Staged untracked files'))
       }
 
       if (options.sign) {
