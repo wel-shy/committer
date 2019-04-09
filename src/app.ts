@@ -171,6 +171,7 @@ export default class App {
     cmd = `${cmd} -m '${message}'`;
 
     await this.executeCommand(cmd);
+    console.log(chalk.green('Changes committed'));
   }
 
   /**
