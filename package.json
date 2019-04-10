@@ -9,7 +9,7 @@
     "build": "tsc",
     "preversion": "npm run test && conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
   },
-  "bin": "./dist/src/index.js",
+  "bin": "./dist/src/Index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wel-shy/committer.git"

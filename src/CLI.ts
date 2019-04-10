@@ -1,7 +1,7 @@
 import * as inquirer from 'inquirer';
 import * as emojis from './emojis.json';
 
-export class Cli {
+export class CLI {
   /**
    * Get responses from command line
    * @returns {Promise<{type: string; scope: string; description: string; body: string; footer: string; issue: string}>}

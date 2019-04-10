@@ -1,4 +1,4 @@
-import App from "../app";
+import App from "../App";
 import { exec } from 'child_process';
 
 jest.mock('child_process', () => {

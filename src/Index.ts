@@ -4,7 +4,7 @@ import App from "./app";
 // @ts-ignore
 import {version} from '../../package.json';
 import chalk from "chalk";
-import { Cli } from "./cli";
+import { CLI } from "./cli";
 
 /**
  * Execute app
@@ -27,7 +27,7 @@ async function exe (): Promise<void> {
   const options = {sign: commander.sign, add: commander.add};
 
   const app: App = new App();
-  const cli: Cli = new Cli();
+  const cli: CLI = new CLI();
   const ans = await cli.getAnswers();
   cli.validate(ans);
 

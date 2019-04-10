@@ -1,8 +1,8 @@
-import {Cli} from "../cli";
+import { CLI } from "../CLI";
 import * as emojis from '../emojis.json';
 
 describe('Cli', () => {
-  let cli!: Cli
+  let cli!: CLI
   let message: {
     type: string,
     scope: string,
@@ -13,7 +13,7 @@ describe('Cli', () => {
   };
 
   beforeEach(() => {
-    cli = new Cli();
+    cli = new CLI();
     message = {
       type: '',
       scope: '',
@@ -79,17 +79,17 @@ describe('Cli', () => {
   });
 
   describe('.filterResponses', () => {
-    it('should return all on empty input', async () => {
+    it('Should return all on empty input', async () => {
       const responses: string[] = await cli.filterResponses('', '');
       expect(responses.length).toEqual(emojis.gitmojis.length);
     });
 
-    it('should return nothing on non matching input', async () => {
+    it('Should return nothing on non matching input', async () => {
       const responses: string[] = await cli.filterResponses('', '123456778');
       expect(responses.length).toEqual(0);
     });
 
-    it('should return matching inputs', async () => {
+    it('Should return matching inputs', async () => {
       const responses: string[] = await cli.filterResponses('', 'test');
       responses.forEach(response => { expect(response.indexOf('test')).toBeGreaterThan(-1) })
     })
