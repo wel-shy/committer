@@ -46,7 +46,7 @@ export default class App {
    */
   public async commitChanges(
     message: string,
-    options?: { add: boolean; sign: boolean }
+    options?: { add: boolean; sign: boolean; push: boolean }
   ): Promise<string> {
     let cmd: string = "git commit";
 
@@ -65,13 +65,25 @@ export default class App {
 
     cmd = `${cmd} -m '${message}'`;
 
+    if (options) {
+      if (options.push) {
+        cmd = `${cmd} && git push`;
+      }
+    }
+
     try {
       await this.executeCommand(cmd);
       console.log(chalk.green("Changes committed"));
-      return "commit successful";
+      if (options) {
+        if (options.push) {
+          console.log(chalk.green("Commit pushed"));
+        }
+      }
     } catch (e) {
       throw e;
     }
+
+    return "commit successful";
   }
 
   /**

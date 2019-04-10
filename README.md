@@ -41,6 +41,9 @@ conventional-committer
 
 - Auto add untracked changes with a `-a` flag.
 - Sign commits with `-s`, requires setting a gpg key for git.
+- Push after commit with `-p`.
+
+Options can be stacked, you can sign and push with `-sp` for example.
 
 ## Test
 

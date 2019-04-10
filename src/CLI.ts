@@ -57,7 +57,8 @@ export class CLI {
       require("inquirer-autocomplete-prompt")
     );
 
-    return inquirer.prompt(questions) as Promise<CliAnswer>;
+    const ans: any = await inquirer.prompt(questions);
+    return ans as CliAnswer;
   }
 
   /**
@@ -86,7 +87,7 @@ export class CLI {
   public filterResponses(answersSoFar: any, input: string): Promise<string[]> {
     return new Promise(resolve => {
       // map to string
-      const mapped: string[] = this.getEmojisAsString();
+      const mapped: string[] = CLI.getEmojisAsString();
 
       // format input
       if (input === undefined) {
@@ -105,7 +106,7 @@ export class CLI {
    * Map emoji to string
    * @return [description]
    */
-  public getEmojisAsString(): string[] {
+  public static getEmojisAsString(): string[] {
     return emojis.gitmojis.map(
       gitmoji => `${gitmoji.emoji.trim()} - ${gitmoji.description.trim()}`
     );
