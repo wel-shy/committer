@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-import App from "./app";
+import App from "./App";
 // @ts-ignore
 import { version } from "../../package.json";
 import chalk from "chalk";
-import { CLI } from "./cli";
+import { CLI } from "./Cli";
 
 /**
  * Execute app
