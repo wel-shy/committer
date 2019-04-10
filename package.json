@@ -1,13 +1,13 @@
 {
   "name": "conventional-committer",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Commit manager",
   "main": "dist/src/index.js",
   "scripts": {
     "test": "jest --coverage --coverageReporters=text-lcov | coveralls",
     "test:local": "jest --coverage",
     "build": "tsc",
-    "preversion": "npm run test && conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
+    "preversion": "npm run test:local && conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "prettier": "prettier --write '**/*.{js,ts,tsx,json,css,md}'"
   },
   "bin": "./dist/src/Index.js",
