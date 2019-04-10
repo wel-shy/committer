@@ -1,3 +1,15 @@
+# [0.3.0](https://github.com/wel-shy/committer/compare/0.2.1...0.3.0) (2019-04-10)
+
+### Features
+
+- adding pushing commits :sparkles: [#7](https://github.com/wel-shy/committer/issues/7) ([57aa206](https://github.com/wel-shy/committer/commit/57aa206))
+
+## [0.2.1](https://github.com/wel-shy/committer/compare/0.2.0...0.2.1) (2019-04-10)
+
+### Bug Fixes
+
+- fixing misnamed imports in index.ts :bug: ([b908439](https://github.com/wel-shy/committer/commit/b908439))
+
 # [0.2.0](https://github.com/wel-shy/committer/compare/0.1.1...0.2.0) (2019-04-09)
 
 ### Features
