@@ -6,5 +6,5 @@ before_script:
   - mkdir coverage
   - tsc
 after_success:
-  - cat ./coverage/coverage-final.json
-  - codecov --file="./coverage/coverage-final.json"
+  - cat ./coverage/coverage.lcov
+  - codecov --file="./coverage.lcov"
