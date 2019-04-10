@@ -1,5 +1,4 @@
-import { expect } from "chai";
-import App from "../src/app";
+import App from "../app";
 
 const app: App = new App();
 const message = {
@@ -18,7 +17,7 @@ describe("App.validate()", function() {
     try {
       app.validate(message);
     } catch (e) {
-      expect(e.message).to.contain('Commit must have a description');
+      expect(e.message).toContain('Commit must have a description');
     }
   });
 
@@ -28,7 +27,7 @@ describe("App.validate()", function() {
     try {
       app.validate(message);
     } catch (e) {
-      expect(e.message).to.contain('Commit must have a type');
+      expect(e.message).toContain('Commit must have a type');
     }
   });
 
@@ -40,7 +39,7 @@ describe("App.validate()", function() {
     try {
       app.validate(message);
     } catch (e) {
-      expect(e.message).to.contain('Issue must be an integer');
+      expect(e.message).toContain('Issue must be an integer');
     }
   });
 
@@ -52,7 +51,7 @@ describe("App.validate()", function() {
     try {
       app.validate(message);
     } catch (e) {
-      expect(e.message).to.contain('Issue must be an integer');
+      expect(e.message).toContain('Issue must be an integer');
     }
   });
 
@@ -72,8 +71,8 @@ describe("App.getCommitMessage()", () => {
 
     const msg = app.getCommitMessage(message);
 
-    expect(msg).to.contain(message.type);
-    expect(msg).to.contain(message.description);
+    expect(msg).toContain(message.type);
+    expect(msg).toContain(message.description);
   });
 
   it('Should generate a commit message with scope', function() {
@@ -83,9 +82,9 @@ describe("App.getCommitMessage()", () => {
 
     const msg = app.getCommitMessage(message);
 
-    expect(msg).to.contain(message.type);
-    expect(msg).to.contain(message.description);
-    expect(msg).to.contain(`(${message.scope})`);
+    expect(msg).toContain(message.type);
+    expect(msg).toContain(message.description);
+    expect(msg).toContain(`(${message.scope})`);
   });
 
   it('Should generate a commit message with issue', function() {
@@ -96,8 +95,8 @@ describe("App.getCommitMessage()", () => {
 
     const msg = app.getCommitMessage(message);
 
-    expect(msg).to.contain(message.type);
-    expect(msg).to.contain(message.description);
-    expect(msg).to.contain(`#${message.issue}`);
+    expect(msg).toContain(message.type);
+    expect(msg).toContain(message.description);
+    expect(msg).toContain(`#${message.issue}`);
   });
 });
