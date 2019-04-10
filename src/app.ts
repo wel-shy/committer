@@ -152,7 +152,7 @@ export default class App {
    * @param message
    * @param options
    */
-  public async commitChanges(message: string, options?: { add: boolean, sign: boolean }): Promise<void> {
+  public async commitChanges(message: string, options?: { add: boolean, sign: boolean }): Promise<string> {
     let cmd: string = 'git commit';
 
     // apply options
@@ -170,8 +170,13 @@ export default class App {
 
     cmd = `${cmd} -m '${message}'`;
 
-    await this.executeCommand(cmd);
-    console.log(chalk.green('Changes committed'));
+    try {
+      const response: string = await this.executeCommand(cmd);
+      console.log(chalk.green('Changes committed'));
+      return 'commit successful';
+    } catch (e) {
+     throw e;
+    }
   }
 
   /**
@@ -180,7 +185,7 @@ export default class App {
    */
   private executeCommand(cmd: string): Promise<string> {
     return new Promise((resolve, reject) => {
-      exec(cmd, (error: Error, stdout: string, stderr: string) => {
+      exec(cmd, (error, stdout, stderr) => {
         if(error) reject(error);
         resolve(stdout.trim());
       })
