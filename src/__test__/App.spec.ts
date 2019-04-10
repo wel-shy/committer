@@ -5,8 +5,8 @@ import { CliAnswer } from "../CliAnswer";
 jest.mock("child_process", () => {
   return {
     exec: jest.fn((cmd: string, cb: any) => {
-      if (cmd.indexOf("error") != -1) {
-        throw new Error();
+      if (/error/.test(cmd)) {
+        return cb(new Error());
       } else {
         return cb(null, "called", "");
       }
