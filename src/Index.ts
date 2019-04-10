@@ -2,7 +2,7 @@
 
 import App from "./App";
 // @ts-ignore
-import { version } from "../../package.json";
+import { version } from "../package.json";
 import chalk from "chalk";
 import { CLI } from "./CLI";
 
@@ -23,10 +23,15 @@ async function exe(): Promise<void> {
   commander
     .option("-s, --sign", "sign commit with gpg key")
     .option("-a, --add", "add all untracked changes")
-    .option("-c, --config", "edit committer config");
+    .option("-c, --config", "edit committer config")
+    .option("-p, --push", "push commit");
 
   commander.parse(process.argv);
-  const options = { sign: commander.sign, add: commander.add };
+  const options = {
+    sign: commander.sign,
+    add: commander.add,
+    push: commander.push
+  };
 
   const app: App = new App();
   const cli: CLI = new CLI();

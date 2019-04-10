@@ -84,7 +84,7 @@ describe("App", () => {
   describe(".commitChanges", () => {
     it("Should commit changes", async () => {
       const testString = "test string";
-      const response = await app.commitChanges(testString);
+      await app.commitChanges(testString);
       expect(exec).toBeCalledWith(
         `git commit -m '${testString}'`,
         expect.anything()
@@ -93,9 +93,10 @@ describe("App", () => {
 
     it("Should commit changes and stage untracked changes", async () => {
       const testString = "test string";
-      const response = await app.commitChanges(testString, {
+      await app.commitChanges(testString, {
         add: true,
-        sign: false
+        sign: false,
+        push: false
       });
       expect(exec).toBeCalledWith(`git add .`, expect.anything());
 
@@ -107,9 +108,10 @@ describe("App", () => {
 
     it("Should commit changes and sign the commit", async () => {
       const testString = "test string";
-      const response = await app.commitChanges(testString, {
+      await app.commitChanges(testString, {
         add: false,
-        sign: true
+        sign: true,
+        push: false
       });
       expect(exec).toBeCalledWith(
         `git commit -S -m '${testString}'`,
@@ -119,9 +121,10 @@ describe("App", () => {
 
     it("Should commit changes, sign the commit, and add untracked", async () => {
       const testString = "test string";
-      const response = await app.commitChanges(testString, {
+      await app.commitChanges(testString, {
         add: true,
-        sign: true
+        sign: true,
+        push: false
       });
       expect(exec).toBeCalledWith(`git add .`, expect.anything());
       expect(exec).toBeCalledWith(
@@ -130,12 +133,28 @@ describe("App", () => {
       );
     });
 
+    it("Should commit changes, sign the commit, and add untracked", async () => {
+      const testString = "test string";
+      await app.commitChanges(testString, {
+        add: true,
+        sign: true,
+        push: true
+      });
+      expect(exec).toBeCalledWith(`git add .`, expect.anything());
+      expect(exec).toBeCalledWith(
+        `git commit -S -m '${testString}'`,
+        expect.anything()
+      );
+      expect(exec).toBeCalledWith(`git push`, expect.anything());
+    });
+
     it("Should throw an error on bad commit", async () => {
       const testString = "error";
       await expect(
         app.commitChanges(testString, {
           add: true,
-          sign: true
+          sign: true,
+          push: false
         })
       ).rejects.toThrow();
     });
