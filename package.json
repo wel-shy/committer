@@ -4,7 +4,8 @@
   "description": "Commit manager",
   "main": "dist/src/index.js",
   "scripts": {
-    "test": "jest --coverage",
+    "test": "jest --coverage --coverageReporters=text-lcov | coveralls",
+    "test:local": "jest --coverage",
     "build": "tsc",
     "preversion": "npm run test && conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
   },
