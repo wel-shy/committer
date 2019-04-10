@@ -7,6 +7,8 @@ jest.mock("child_process", () => {
     exec: jest.fn((cmd: string, cb: any) => {
       if (/error/.test(cmd)) {
         return cb(new Error());
+      } else if (cmd.indexOf("error") != -1 && cmd.indexOf("git push") != -1) {
+        return cb(new Error());
       } else {
         return cb(null, "called", "");
       }
@@ -145,7 +147,10 @@ describe("App", () => {
         `git commit -S -m '${testString}'`,
         expect.anything()
       );
-      expect(exec).toBeCalledWith(`git push`, expect.anything());
+      expect(exec).toBeCalledWith(
+        `git commit -S -m '${testString}' && git push`,
+        expect.anything()
+      );
     });
 
     it("Should throw an error on bad commit", async () => {
@@ -155,6 +160,17 @@ describe("App", () => {
           add: true,
           sign: true,
           push: false
+        })
+      ).rejects.toThrow();
+    });
+
+    it("Should throw an error on bad push", async () => {
+      const testString = "error";
+      await expect(
+        app.commitChanges(testString, {
+          add: true,
+          sign: true,
+          push: true
         })
       ).rejects.toThrow();
     });

@@ -65,22 +65,22 @@ export default class App {
 
     cmd = `${cmd} -m '${message}'`;
 
+    if (options) {
+      if (options.push) {
+        cmd = `${cmd} && git push`;
+      }
+    }
+
     try {
       await this.executeCommand(cmd);
       console.log(chalk.green("Changes committed"));
-    } catch (e) {
-      throw e;
-    }
-
-    if (options) {
-      if (options.push) {
-        try {
-          await this.executeCommand("git push");
-          console.log(chalk.green("Pushed commit"));
-        } catch (e) {
-          throw e;
+      if (options) {
+        if (options.push) {
+          console.log(chalk.green("Commit pushed"));
         }
       }
+    } catch (e) {
+      throw e;
     }
 
     return "commit successful";
