@@ -97,6 +97,11 @@ describe("Cli", () => {
       expect(responses.length).toEqual(emojis.gitmojis.length);
     });
 
+    it("Should return all on undefined input", async () => {
+      const responses: string[] = await cli.filterResponses("", undefined);
+      expect(responses.length).toEqual(emojis.gitmojis.length);
+    });
+
     it("Should return nothing on non matching input", async () => {
       const responses: string[] = await cli.filterResponses("", "123456778");
       expect(responses.length).toEqual(0);
@@ -112,8 +117,15 @@ describe("Cli", () => {
 
   describe(".getAnswers", () => {
     it("Should populate the question list", async () => {
-      const reponses: any = await cli.getAnswers();
+      await cli.getAnswers();
       expect(inquirer.prompt).toHaveBeenCalled();
+    });
+  });
+
+  describe(".formatEmoji", () => {
+    it("Should return an emoji code from an input", async () => {
+      const response: string = await cli.formatEmoji("✨");
+      expect(response).toContain(":sparkles:");
     });
   });
 });

@@ -1,5 +1,3 @@
-import * as inquirer from "inquirer";
-import * as emojis from "./emojis.json";
 import { exec } from "child_process";
 import chalk from "chalk";
 import { CliAnswer } from "./CliAnswer.js";
@@ -12,9 +10,8 @@ import { CliAnswer } from "./CliAnswer.js";
 export default class App {
   /**
    * Construct the commit message
-   *
-   * @param {{type: string; scope: string; description: string; body: string; footer: string; issue: string; emoji: string}} answers
-   * @returns {string}
+   * @param  answers outline of cli answers
+   * @return         commit message
    */
   public getCommitMessage(answers: CliAnswer) {
     let msg: string;
@@ -69,7 +66,7 @@ export default class App {
     cmd = `${cmd} -m '${message}'`;
 
     try {
-      const response: string = await this.executeCommand(cmd);
+      await this.executeCommand(cmd);
       console.log(chalk.green("Changes committed"));
       return "commit successful";
     } catch (e) {

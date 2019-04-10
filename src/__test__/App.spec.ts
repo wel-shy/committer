@@ -4,7 +4,13 @@ import { CliAnswer } from "../CliAnswer";
 
 jest.mock("child_process", () => {
   return {
-    exec: jest.fn((cmd, cb) => cb(null, "called", ""))
+    exec: jest.fn((cmd: string, cb: any) => {
+      if (cmd.indexOf("error") != -1) {
+        throw new Error();
+      } else {
+        return cb(null, "called", "");
+      }
+    })
   };
 });
 
@@ -45,6 +51,20 @@ describe("App", () => {
       expect(msg).toContain(message.type);
       expect(msg).toContain(message.description);
       expect(msg).toContain(`(${message.scope})`);
+    });
+
+    it("Should generate a commit message with a body", function() {
+      message.type = "feat";
+      message.description = "some kind of commit";
+      message.scope = "lang";
+      message.body = "message body";
+
+      const msg = app.getCommitMessage(message);
+
+      expect(msg).toContain(message.type);
+      expect(msg).toContain(message.description);
+      expect(msg).toContain(`(${message.scope})`);
+      expect(msg).toContain(message.body);
     });
 
     it("Should generate a commit message with issue", function() {
@@ -108,6 +128,16 @@ describe("App", () => {
         `git commit -S -m '${testString}'`,
         expect.anything()
       );
+    });
+
+    it("Should throw an error on bad commit", async () => {
+      const testString = "error";
+      await expect(
+        app.commitChanges(testString, {
+          add: true,
+          sign: true
+        })
+      ).rejects.toThrow();
     });
   });
 });

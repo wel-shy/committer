@@ -1,6 +1,7 @@
 import * as inquirer from "inquirer";
 import * as emojis from "./emojis.json";
-import { CliAnswer } from "./CliAnswer.js";
+import { CliAnswer } from "./CliAnswer";
+import { Emoji } from "./Emoji";
 
 export class CLI {
   /**
@@ -28,18 +29,7 @@ export class CLI {
         name: "emoji",
         message: "Commit summary:",
         source: this.filterResponses,
-        filter: (input: string) => {
-          return new Promise(resolve => {
-            const ans: {
-              emoji: string;
-              entity?: string;
-              code: string;
-              description: string;
-              name: string;
-            }[] = emojis.gitmojis.filter(g => input.indexOf(g.emoji) > -1);
-            resolve(ans[0].code);
-          });
-        }
+        filter: this.formatEmoji
       },
       {
         type: "list",
@@ -111,9 +101,22 @@ export class CLI {
     });
   }
 
+  /**
+   * Map emoji to string
+   * @return [description]
+   */
   public getEmojisAsString(): string[] {
     return emojis.gitmojis.map(
       gitmoji => `${gitmoji.emoji.trim()} - ${gitmoji.description.trim()}`
     );
+  }
+
+  public formatEmoji(input: string): Promise<string> {
+    return new Promise(resolve => {
+      const ans: Emoji[] = emojis.gitmojis.filter(
+        g => input.indexOf(g.emoji) > -1
+      ) as Emoji[];
+      resolve(ans[0].code);
+    });
   }
 }
