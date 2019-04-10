@@ -4,7 +4,7 @@ import App from "./App";
 // @ts-ignore
 import { version } from "../../package.json";
 import chalk from "chalk";
-import { CLI } from "./Cli";
+import { CLI } from "./CLI";
 
 /**
  * Execute app

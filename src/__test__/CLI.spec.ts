@@ -1,6 +1,25 @@
 import { CLI } from "../CLI";
 import * as emojis from "../emojis.json";
 import { CliAnswer } from "../CliAnswer";
+import * as inquirer from "inquirer";
+
+jest.mock("inquirer", () => {
+  return {
+    prompt: jest.fn((questions: any) => {
+      return {
+        type: "",
+        scope: "",
+        description: "",
+        body: "",
+        issue: "",
+        emoji: ""
+      };
+    }),
+    registerPrompt: jest.fn(
+      (name: string, mod: inquirer.PromptModule): void => {}
+    )
+  };
+});
 
 describe("Cli", () => {
   let cli!: CLI;
@@ -88,6 +107,13 @@ describe("Cli", () => {
       responses.forEach(response => {
         expect(response.indexOf("test")).toBeGreaterThan(-1);
       });
+    });
+  });
+
+  describe(".getAnswers", () => {
+    it("Should populate the question list", async () => {
+      const reponses: any = await cli.getAnswers();
+      expect(inquirer.prompt).toHaveBeenCalled();
     });
   });
 });
