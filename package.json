@@ -6,7 +6,7 @@
   "scripts": {
     "pretest": "npm run build",
     "test": "nyc mocha 'dist/test/**/*.js' --exit",
-    "posttest": "nyc report --reporter=text-lcov > coverage.lcov",
+    "posttest": "nyc report --reporter=text-lcov",
     "build": "tsc",
     "preversion": "npm run test && conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
   },
