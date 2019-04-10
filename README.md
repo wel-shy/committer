@@ -1,7 +1,7 @@
 # conventional-committer
 
 [![Build Status](https://travis-ci.com/wel-shy/committer.svg?branch=master)](https://travis-ci.com/wel-shy/committer)
-[![Coverage Status](https://coveralls.io/repos/github/wel-shy/committer/badge.svg?branch=dev)](https://coveralls.io/github/wel-shy/committer?branch=dev)
+[![Coverage Status](https://coveralls.io/repos/github/wel-shy/committer/badge.svg?branch=master)](https://coveralls.io/github/wel-shy/committer?branch=master)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Conventional Committer is a git commit formatter, it formats your commits into the [conventional commit](https://www.conventionalcommits.org/en/v1.0.0-beta.3/) style, but with extra information embedded:
@@ -50,3 +50,14 @@ Options can be stacked, you can sign and push with `-sp` for example.
 ```
 npm run test:local
 ```
+
+## Deploy
+
+To deploy from `dev`:
+
+- Branch into `rc-vX.X.X` where X.X.X is the new version number.
+- Update any documentation.
+- Run `npm version <type>` where type is `major|minor|patch`.
+- Commit and push any other changes.
+- Open a pull request to master from `rc-vX.X.X`.
+- Travis will auto deploy from master.
