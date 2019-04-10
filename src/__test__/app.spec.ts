@@ -24,61 +24,6 @@ describe('App', () => {
     app = new App()
   })
 
-  describe(".validate", function() {
-
-    it("Should fail if commit message is not given", function() {
-      message.type = 'feat';
-
-      try {
-        app.validate(message);
-      } catch (e) {
-        expect(e.message).toContain('Commit must have a description');
-      }
-    });
-
-    it("Should fail if commit has no type", function() {
-      message.type = '';
-
-      try {
-        app.validate(message);
-      } catch (e) {
-        expect(e.message).toContain('Commit must have a type');
-      }
-    });
-
-    it("Should fail if issue is a string", function() {
-      message.type = 'feat';
-      message.description = 'some kind of commit';
-      message.issue = 'hello';
-
-      try {
-        app.validate(message);
-      } catch (e) {
-        expect(e.message).toContain('Issue must be an integer');
-      }
-    });
-
-    it("Should fail if issue is a float", function() {
-      message.type = 'feat';
-      message.description = 'some kind of commit';
-      message.issue = '1.22';
-
-      try {
-        app.validate(message);
-      } catch (e) {
-        expect(e.message).toContain('Issue must be an integer');
-      }
-    });
-
-    it("Should pass if issue is a integer", function() {
-      message.type = 'feat';
-      message.description = 'some kind of commit';
-      message.issue = '1';
-
-      app.validate(message);
-    });
-  });
-
   describe(".getCommitMessage", () => {
     it('Should generate a commit message', function() {
       message.type = 'feat';
